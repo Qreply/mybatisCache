@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是mapper的全限定类名-->
+<mapper namespace="com.wd.mapper.UserMapper">
+
+    <!--开启user支持二级缓存-->
+    <cache></cache>
+
+    <!--配置查询所有-->
+    <!--id属性的取值必须是mapper接口的方法名-->
+    <select id="findAll" resultType="com.wd.entity.User">
+        select * from user u left outer join account a on u.id = a.uid
+    </select>
+
+    <!--根据id查询用户信息-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.wd.entity.User" useCache="true">
+        select * from user where id = #{id}
+    </select>
+
+    <!--更新用户信息-->
+    <update id="updateUser" parameterType="user">
+        update user set username = #{username}, address = #{address} where id = #{id}
+    </update>
+
+
+</mapper>
